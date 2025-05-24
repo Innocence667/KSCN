@@ -1,5 +1,6 @@
 *.log
 keystore.json
 __pycache__/
+lagrange-0-db/
 *.pyc
 timer_tasks.txt
