@@ -1,2 +1,4 @@
 *.log
 keystore.json
+__pycache__/
+*.pyc
