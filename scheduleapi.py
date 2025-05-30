@@ -23,7 +23,7 @@ def schedule_message(group_id, message, time_str):
 def send_scheduled_message(group_id, message):
     """发送计划好的消息"""
     requests.get(url='http://127.0.0.1:5700/send_group_msg?group_id={0}&message={1}'.format(group_id, message))
-    return schedule.CancelJob  # 如果只想发送一次，返回CancelJob，否则删除此行
+    # return schedule.CancelJob  # 如果只想发送一次，返回CancelJob，否则删除此行
 
 def schedule_daily_message(group_id, message, time_str, save_to_file=True):
     """设置每日定时消息"""
