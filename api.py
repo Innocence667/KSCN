@@ -11,11 +11,13 @@ from flask import request
 
 import scheduleapi
 
+setu_cooldown = {}  #格式: {用户ID: 最后调用时间}
+
 def keyword(message, uid, gid = None):
     if message[:]=='>help':
         usage(gid)
     if message[:]=='>来点涩图' or message[:]=='>setu':
-        setu(gid)
+        setu(gid,uid)
     # if message[:]=='>hello':
     #    hhw(gid)
     # if message[0:3]=='>ng':
@@ -87,8 +89,20 @@ def ngdownload(gid,songid):
     wget.download(url,path)
     requests.get(url='http://127.0.0.1:5700/upload_group_file?group_id={0}&file={1}&name={2}'.format(gid,path,name))
 
-def setu(gid):
+def setu(gid,uid):
     if gid==594936663: return
+    # 如果提供了用户 ID，检查该用户是否在冷却时间内
+    if uid is not None:
+        current_time = time.time()
+        last_call_time = setu_cooldown.get(uid, 0)
+        # 检查是否在一分钟冷却时间内
+        if current_time - last_call_time < 60:
+            remaining = int(60 - (current_time - last_call_time))
+            requests.get(url='http://127.0.0.1:5700/send_group_msg?group_id={0}&message=不许涩涩！你需要再等{1}秒才能用这个功能！'.format(gid, remaining))
+            return
+        # 更新用户最后调用时间
+        setu_cooldown[uid] = current_time
+    
     url='https://api.lolicon.app/setu/v2?size=original&size=regular'
     menu=requests.get(url)
     setu_url=menu.json()['data'][0]['urls']['regular']
