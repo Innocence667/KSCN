@@ -4,3 +4,4 @@ __pycache__/
 lagrange-0-db/
 *.pyc
 timer_tasks.txt
+*.png
