@@ -7,6 +7,7 @@ import time
 import wget
 import threading
 import os
+import base64
 from flask import request
 
 import scheduleapi
@@ -125,3 +126,12 @@ def httpcat(gid,picid):
     else:
         url='https://http.cat/'+str(picid)
         requests.get(url='http://127.0.0.1:5700/send_group_msg?group_id={0}&message={1}'.format(gid,r'[CQ:image,'r'file='+str(url)+r']'))
+
+def poke(gid, uid):
+    with open('kscnconfig.json','r') as f:
+        config = json.load(f)
+    num=random.randint(0,14)
+    image_path= os.path.join(config['poke_image_folder'], f"{num}.jpg") # 使用配置文件中的图片路径
+    file_url=f"file://{image_path}"
+    requests.get(url='http://127.0.1:5700/send_group_msg?group_id={0}&message={1}'.format(
+        gid, f'[CQ:image,file={file_url}]'))

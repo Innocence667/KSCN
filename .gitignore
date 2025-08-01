@@ -1,5 +1,6 @@
 *.log
 keystore.json
+device.json
 __pycache__/
 lagrange-0-db/
 *.pyc
