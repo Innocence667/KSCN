@@ -1,6 +1,8 @@
 *.log
 keystore.json
 device.json
+kscnconfig.json
+Cats/
 __pycache__/
 lagrange-0-db/
 *.pyc
